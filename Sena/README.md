@@ -1,4 +1,5 @@
 # Proyecto Base de Datos Sena
+![drawSQL-sena-export-2023-12-05](https://github.com/Dianaalejandra1446/mySQL/assets/139186201/e0d6e908-4707-4d90-8cd7-7616916a7eb3)
 
 ## Creacion y Uso de Base de Datos
 
