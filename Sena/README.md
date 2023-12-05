@@ -451,13 +451,13 @@ WHERE
 
 1. Con que instruccion puedo cambiar o modificar un dato existente en la tabla 
 A. INSERT
-B. UPDATE
+**B.** UPDATE
 C. ALTER 
 D. SELECT
 
 2. Como puedo agregar una llave foranea a una tabla  
 
-A. ALTER TABLE nombre_tabla ADD FOREIGN KEY (nombre_columna) REFRENCES nombre_tabla_primaria (nombre_columna);
+**A.** ALTER TABLE nombre_tabla ADD FOREIGN KEY (nombre_columna) REFRENCES nombre_tabla_primaria (nombre_columna);
 
 B. ALTER TABLE nombre_tabla 
 ADD CHECK (nombre_columna) REFRENCES nombre_tabla_primaria (nombre_columna);  
@@ -468,11 +468,11 @@ ADD CONSTRAINT (nombre_columna) ; D. ALTER TABLE nombre_table DROP TABLE nombre_
 3. Que operador logico evalua dos condiciones y devuelve verdadero si una es verdadera 
 A. AND
 B. NOT 
-C. OR 
+**C.** OR 
 D. IS NULL
 
 4. Que funcion devuelve la fecha y hora actual 
 A. ROUND( ) 
-B. NOW( ) 
+**B.** NOW( ) 
 C. TRIM( ) 
 D. SUBSTRING( )
