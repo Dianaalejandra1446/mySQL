@@ -301,14 +301,14 @@ WHERE
 M.estado_matricula = 'Cancelado';
 ~~~
 ### Resultado:
-
+~~~
 +---------------+----------------+-----------------+------------------+----------------+
 | primer_nombre | segundo_nombre | primer_apellido | segundo_apellido | ruta_cancelada |
 +---------------+----------------+-----------------+------------------+----------------+
 | Juan          | José           | Cardona         | NULL             | Videojuegos    |
 | Henry         | Soler          | Vega            | NULL             | Robótica       |
 +---------------+----------------+-----------------+------------------+----------------+
-
+~~~
 
 ## Seleccionar Nombre de los cursos que no tienen un instructor asignado
 
@@ -320,6 +320,7 @@ WHERE id_instructor IS NULL;
 ~~~
 
 ### Resultado 
+~~~
 +----------------------------------+
 | CursoSinInstructor               |
 +----------------------------------+
@@ -333,6 +334,7 @@ WHERE id_instructor IS NULL;
 | Buceo 2                          |
 | Riesgo Eléctrico                 |
 +----------------------------------+
+~~~
 
 ## Seleccionar Nombres de los instructores que dictan cursos en la ruta de aprendizaje “Sistemas de Información Empresariales”.
 ~~~
@@ -345,7 +347,7 @@ WHERE R.enfasis_ruta = 'Sistemas de Información Empresariales';
 ~~~
 
 ### Resultado 
-
+~~~
 +---------------+----------------+-----------------+------------------+
 | primer_nombre | segundo_nombre | primer_apellido | segundo_apellido |
 +---------------+----------------+-----------------+------------------+
@@ -357,7 +359,7 @@ WHERE R.enfasis_ruta = 'Sistemas de Información Empresariales';
 +---------------+----------------+-----------------+------------------+
 5 rows in set (0,01 sec)
 
-
+~~~
 
 
 
@@ -382,7 +384,7 @@ WHERE
 ~~~
 
 ### Resultado
-
+~~~
 +------------------------------+----------------+---------------------------------+
 | Nombre_Profesional           | nombre_carrera | enfasis_ruta                    |
 +------------------------------+----------------+---------------------------------+
@@ -392,7 +394,7 @@ WHERE
 | Antonio Cañate Cortés        | Soldadura      | Soldadura Eléctrica Industrial  |
 | Daniel Simancas Junior       | Soldadura      | Soldadura Autógena Industrial   |
 +------------------------------+----------------+---------------------------------+
-
+~~~
 
 ## Genere un listado de los aprendices matriculados en el curso “Bases de Datos Relacionales”.
 ~~~
@@ -410,7 +412,7 @@ WHERE
     aprendizXcurso.id_curso = 17;
 ~~~
 ### Resultado
-
+~~~
 +---------------------+
 | Aprendiz_BDR        |
 +---------------------+
@@ -418,7 +420,7 @@ WHERE
 | Juan José Cardona   |
 +---------------------+
 2 rows in set (0,00 sec)
-
+~~~
 
 ## Nombres de Instructores que no tienen curso asignado.
 ~~~
@@ -433,6 +435,7 @@ WHERE
 ~~~
 
 ### Resultado
+~~~
 +----------------------+
 | Instructor sin curso |
 +----------------------+
@@ -441,7 +444,7 @@ WHERE
 | Marisela Sevilla     |
 +----------------------+
 3 rows in set (0,00 sec)
-
+~~~
 ### Preguntas Seleccion Multiple 
 
 1. Con que instruccion puedo cambiar o modificar un dato existente en la tabla 
