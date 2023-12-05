@@ -1,5 +1,7 @@
 # Proyecto Base de Datos Sena
 ![drawSQL-sena-export-2023-12-05](https://github.com/Dianaalejandra1446/mySQL/assets/139186201/e0d6e908-4707-4d90-8cd7-7616916a7eb3)
+![Entity Relationship Diagram Team Whiteboard in Red Yellow Purple Trendy Stickers Style](https://github.com/Dianaalejandra1446/mySQL/assets/139186201/5a069997-a50d-49b0-b905-7c048835b90e)
+
 
 ## Creacion y Uso de Base de Datos
 
