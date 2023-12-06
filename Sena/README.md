@@ -1,4 +1,7 @@
 # Proyecto Base de Datos Sena
+![drawSQL-sena-export-2023-12-05](https://github.com/Dianaalejandra1446/mySQL/assets/139186201/e0d6e908-4707-4d90-8cd7-7616916a7eb3)
+![Entity Relationship Diagram Team Whiteboard in Red Yellow Purple Trendy Stickers Style](https://github.com/Dianaalejandra1446/mySQL/assets/139186201/5a069997-a50d-49b0-b905-7c048835b90e)
+
 
 ## Creacion y Uso de Base de Datos
 
@@ -267,11 +270,20 @@ INSERT INTO cursoXruta (id_ruta,id_curso,duracion) VALUES
 ## Seleccionar los nombres y edades de aprendices que están cursando la carrera de electrónica.
 
 ~~~
-SELECT CONCAT_WS(' ',A.primer_nombre,A.segundo_nombre,A.primer_apellido,A.segundo_apellido) AS Aprendiz_electronica, A.edad
-FROM Aprendiz A
-INNER JOIN Carrera C ON C.id_carrera = A.id_carrera
-WHERE id_carrera = 2;
+SELECT primer_nombre, edad
+FROM Aprendiz
+WHERE id_carrera = (SELECT id_carerra FROM Carrera WHERE nombre_carrera = 'Electrónica');
 ~~~
+### Resultado
++---------------+------+
+| primer_nombre | edad |
++---------------+------+
+| Gustavo       |   23 |
+| Pedro         |   24 |
+| Jairo         |   18 |
+| Henry         |   18 |
++---------------+------+
+4 rows in set (0,00 sec)
 
 ## Seleccionar Nombres de Aprendices junto al nombre de la ruta de aprendizaje que cancelaron.
 ~~~
@@ -290,6 +302,15 @@ Ruta R ON A.id_ruta = R.id_ruta
 WHERE
 M.estado_matricula = 'Cancelado';
 ~~~
+### Resultado:
+~~~
++---------------+----------------+-----------------+------------------+----------------+
+| primer_nombre | segundo_nombre | primer_apellido | segundo_apellido | ruta_cancelada |
++---------------+----------------+-----------------+------------------+----------------+
+| Juan          | José           | Cardona         | NULL             | Videojuegos    |
+| Henry         | Soler          | Vega            | NULL             | Robótica       |
++---------------+----------------+-----------------+------------------+----------------+
+~~~
 
 ## Seleccionar Nombre de los cursos que no tienen un instructor asignado
 
@@ -300,19 +321,49 @@ INNER JOIN Cursos ON cursoXinstructor.id_curso = Cursos.id_curso
 WHERE id_instructor IS NULL;
 ~~~
 
+### Resultado 
+~~~
++----------------------------------+
+| CursoSinInstructor               |
++----------------------------------+
+| Motor de Cuatro Tiempos          |
+| Enfermedades Laborales           |
+| Higiene Postural en el Trabajo   |
+| Ergonomía                        |
+| Legislación Laboral en Colombia  |
+| Métodos de Soldadura             |
+| Buceo 1                          |
+| Buceo 2                          |
+| Riesgo Eléctrico                 |
++----------------------------------+
+~~~
+
 ## Seleccionar Nombres de los instructores que dictan cursos en la ruta de aprendizaje “Sistemas de Información Empresariales”.
 ~~~
-SELECT 
-    CONCAT_WS(' ',I.primer_nombre,I.segundo_nombre,I.primer_apellido,I.segundo_apellido) AS InstructoresSIE,CI.id_curso
-FROM
-    Instructor I,cursoXinstructor CI
-JOIN
-    cursoXruta CR ON CI.id_curso = CR.id_curso
-JOIN
-    Ruta R ON R.id_ruta = CR.id_ruta
-WHERE
-    R.id_ruta = 1;
+SELECT I.primer_nombre, I.segundo_nombre, I.primer_apellido, I.segundo_apellido
+FROM Instructor I
+JOIN cursoXinstructor CI ON I.id_instructor = CI.id_instructor
+JOIN cursoXruta CR ON CI.id_curso = CR.id_curso
+JOIN Ruta R ON CR.id_ruta = R.id_ruta
+WHERE R.enfasis_ruta = 'Sistemas de Información Empresariales';
 ~~~
+
+### Resultado 
+~~~
++---------------+----------------+-----------------+------------------+
+| primer_nombre | segundo_nombre | primer_apellido | segundo_apellido |
++---------------+----------------+-----------------+------------------+
+| Marinela      | NULL           | Narvaez         | NULL             |
+| Ricardo       | Vicente        | Jaimes          | NULL             |
+| Agustín       | Parra          | Granados        | NULL             |
+| Nelson        | Raúl           | Buitrago        | NULL             |
+| Roy           | Hernando       | Llamas          | NULL             |
++---------------+----------------+-----------------+------------------+
+5 rows in set (0,01 sec)
+
+~~~
+
+
 
 ## Genere un listado de todos los aprendices que terminaron una Carrera mostrando el nombre del profesional, el nombre de la carrera y el énfasis de la carrera (Nombre de la Ruta de aprendizaje)
 ~~~
@@ -330,8 +381,21 @@ JOIN
     Ruta R  ON R.id_ruta = A.id_ruta
 JOIN 
     Carrera C ON C.id_carerra = R.id_carrera
-WHERE
+WHERE   
     M.estado_matricula = 'Terminado'
+~~~
+
+### Resultado
+~~~
++------------------------------+----------------+---------------------------------+
+| Nombre_Profesional           | nombre_carrera | enfasis_ruta                    |
++------------------------------+----------------+---------------------------------+
+| Gustavo Noriega Alzate       | Electrónica    | Microcontroladores              |
+| Pedro Nell Gómez Díaz        | Electrónica    | Microcontroladores              |
+| Jairo Augusto Castro Camargo | Electrónica    | Robótica                        |
+| Antonio Cañate Cortés        | Soldadura      | Soldadura Eléctrica Industrial  |
+| Daniel Simancas Junior       | Soldadura      | Soldadura Autógena Industrial   |
++------------------------------+----------------+---------------------------------+
 ~~~
 
 ## Genere un listado de los aprendices matriculados en el curso “Bases de Datos Relacionales”.
@@ -349,6 +413,16 @@ JOIN
 WHERE
     aprendizXcurso.id_curso = 17;
 ~~~
+### Resultado
+~~~
++---------------------+
+| Aprendiz_BDR        |
++---------------------+
+| Carlos Saúl Gómez   |
+| Juan José Cardona   |
++---------------------+
+2 rows in set (0,00 sec)
+~~~
 
 ## Nombres de Instructores que no tienen curso asignado.
 ~~~
@@ -359,29 +433,32 @@ FROM
 LEFT JOIN
     cursoXinstructor ON cursoXinstructor.id_instructor = I.id_instructor
 WHERE
-    cursoXinstructor.id_instructor IS NULL;
-
---Quiero seleccionar a los instructores con especialidad en sistemas
-SELECT
-    I.primer_nombre	,I.segundo_nombre	,I.primer_apellido	,I.segundo_apellido
-FROM 
-    instructor I
-INNER JOIN 
-    Especialidad E ON E.id_especialidad = I.id_especialidad
-WHERE
-    I.id_especialidad = 1;
+    cursoXinstructor.id_instructor IS NULL OR cursoXinstructor.id_instructor = 0;
 ~~~
 
+### Resultado
+~~~
++----------------------+
+| Instructor sin curso |
++----------------------+
+| Pedro  Santamaría    |
+| Andrea González      |
+| Marisela Sevilla     |
++----------------------+
+3 rows in set (0,00 sec)
+~~~
 ### Preguntas Seleccion Multiple 
 
 1. Con que instruccion puedo cambiar o modificar un dato existente en la tabla 
+~~~
 A. INSERT
 B. UPDATE
 C. ALTER 
 D. SELECT
-
+~~~
+### RTA: B
 2. Como puedo agregar una llave foranea a una tabla  
-
+~~~
 A. ALTER TABLE nombre_tabla ADD FOREIGN KEY (nombre_columna) REFRENCES nombre_tabla_primaria (nombre_columna);
 
 B. ALTER TABLE nombre_tabla 
@@ -389,15 +466,22 @@ ADD CHECK (nombre_columna) REFRENCES nombre_tabla_primaria (nombre_columna);
 
 C.  ALTER TABLE nombre_tabla ;
 ADD CONSTRAINT (nombre_columna) ; D. ALTER TABLE nombre_table DROP TABLE nombre_table;
+~~~
+### RTA: A
 
 3. Que operador logico evalua dos condiciones y devuelve verdadero si una es verdadera 
+~~~
 A. AND
 B. NOT 
 C. OR 
 D. IS NULL
-
+~~~
+### RTA: C
 4. Que funcion devuelve la fecha y hora actual 
+~~~
 A. ROUND( ) 
 B. NOW( ) 
 C. TRIM( ) 
 D. SUBSTRING( )
+~~~
+### RTA: B
