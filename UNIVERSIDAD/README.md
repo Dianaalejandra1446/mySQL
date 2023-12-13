@@ -286,7 +286,25 @@
         FROM persona P
         INNER JOIN profesor PR ON PR.id_profesor = P.id
         INNER JOIN departamento D ON D.id = PR.id_departamento 
-        WHERE P.tipo = 'profesor' AND ORDER BY D.nombre,P.nombre,P.apellido1,P.apellido2;
+        WHERE P.tipo = 'profesor' ORDER BY D.nombre,P.nombre,P.apellido1,P.apellido2;
+
+        +-----------+------------+------------+--------------------+
+        | nombre    | apellido1  | apellido2  | nombre             |
+        +-----------+------------+------------+--------------------+
+        | Micaela   | Monahan    | Murray     | Agronomía          |
+        | Antonio   | Fahey      | Considine  | Economía y Empresa |
+        | Cristina  | Lemke      | Rutherford | Economía y Empresa |
+        | Carmen    | Streich    | Hirthe     | Educación          |
+        | Esther    | Spencer    | Lakin      | Educación          |
+        | Guillermo | Ruecker    | Upton      | Educación          |
+        | Manolo    | Hamill     | Kozey      | Informática        |
+        | Zoe       | Ramirez    | Gea        | Informática        |
+        | Alejandro | Kohler     | Schoen     | Matemáticas        |
+        | David     | Schmidt    | Fisher     | Matemáticas        |
+        | Alfredo   | Stiedemann | Morissette | Química y Física   |
+        | Francesca | Schowalter | Muller     | Química y Física   |
+        +-----------+------------+------------+--------------------+
+        12 rows in set (0.00 sec)
      ```
 
 13. Devuelve un listado con los profesores que no están asociados a un departamento.Devuelve un listado con los departamentos que no tienen profesores asociados.
@@ -315,37 +333,156 @@
 14. Devuelve un listado con los profesores que no imparten ninguna asignatura.
 
      ```sql
-       # Consulta Aqui
+        SELECT P.nombre,P.apellido1,P.apellido2
+        FROM persona P
+        INNER JOIN profesor PR ON PR.id_profesor = P.id
+        LEFT JOIN asignatura A ON A.id_profesor = PR.id_profesor
+        WHERE P.tipo='profesor' AND A.id_profesor IS NULL;
+
+        +-----------+------------+------------+
+        | nombre    | apellido1  | apellido2  |
+        +-----------+------------+------------+
+        | David     | Schmidt    | Fisher     |
+        | Alejandro | Kohler     | Schoen     |
+        | Cristina  | Lemke      | Rutherford |
+        | Antonio   | Fahey      | Considine  |
+        | Esther    | Spencer    | Lakin      |
+        | Carmen    | Streich    | Hirthe     |
+        | Guillermo | Ruecker    | Upton      |
+        | Micaela   | Monahan    | Murray     |
+        | Alfredo   | Stiedemann | Morissette |
+        | Francesca | Schowalter | Muller     |
+        +-----------+------------+------------+
+        10 rows in set (0.00 sec)
+        
      ```
 
 15. Devuelve un listado con las asignaturas que no tienen un profesor asignado.
 
-     ```sql
-       # Consulta Aqui
+     ```sql    
+        SELECT A.nombre
+        FROM asignatura A
+        WHERE A.id_profesor IS NULL;
+
+        +------------------------------------------------------------------------+
+        | nombre                                                                 |
+        +------------------------------------------------------------------------+
+        | Ingeniería de Requisitos                                               |
+        | Integración de las Tecnologías de la Información en las Organizaciones |
+        | Modelado y Diseño del Software 1                                       |
+        | Multiprocesadores                                                      |
+        | Seguridad y cumplimiento normativo                                     |
+        | Sistema de Información para las Organizaciones                         |
+        | Tecnologías web                                                        |
+        | Teoría de códigos y criptografía                                       |
+        | Administración de bases de datos                                       |
+        | Herramientas y Métodos de Ingeniería del Software                      |
+        | Informática industrial y robótica                                      |
+        | Ingeniería de Sistemas de Información                                  |
+        | Modelado y Diseño del Software 2                                       |
+        | Negocio Electrónico                                                    |
+        | Periféricos e interfaces                                               |
+        | Sistemas de tiempo real                                                |
+        | Tecnologías de acceso a red                                            |
+        | Tratamiento digital de imágenes                                        |
+        | Administración de redes y sistemas operativos                          |
+        | Almacenes de Datos                                                     |
+        | Fiabilidad y Gestión de Riesgos                                        |
+        | Líneas de Productos Software                                           |
+        | Procesos de Ingeniería del Software 1                                  |
+        | Tecnologías multimedia                                                 |
+        | Análisis y planificación de las TI                                     |
+        | Desarrollo Rápido de Aplicaciones                                      |
+        | Gestión de la Calidad y de la Innovación Tecnológica                   |
+        | Inteligencia del Negocio                                               |
+        | Procesos de Ingeniería del Software 2                                  |
+        | Seguridad Informática                                                  |
+        | Biologia celular                                                       |
+        | Física                                                                 |
+        | Matemáticas I                                                          |
+        | Química general                                                        |
+        | Química orgánica                                                       |
+        | Biología vegetal y animal                                              |
+        | Bioquímica                                                             |
+        | Genética                                                               |
+        | Matemáticas II                                                         |
+        | Microbiología                                                          |
+        | Botánica agrícola                                                      |
+        | Fisiología vegetal                                                     |
+        | Genética molecular                                                     |
+        | Ingeniería bioquímica                                                  |
+        | Termodinámica y cinética química aplicada                              |
+        | Biorreactores                                                          |
+        | Biotecnología microbiana                                               |
+        | Ingeniería genética                                                    |
+        | Inmunología                                                            |
+        | Virología                                                              |
+        | Bases moleculares del desarrollo vegetal                               |
+        | Fisiología animal                                                      |
+        | Metabolismo y biosíntesis de biomoléculas                              |
+        | Operaciones de separación                                              |
+        | Patología molecular de plantas                                         |
+        | Técnicas instrumentales básicas                                        |
+        | Bioinformática                                                         |
+        | Biotecnología de los productos hortofrutículas                         |
+        | Biotecnología vegetal                                                  |
+        | Genómica y proteómica                                                  |
+        | Procesos biotecnológicos                                               |
+        | Técnicas instrumentales avanzadas                                      |
+        +------------------------------------------------------------------------+
+        62 rows in set (0.00 sec)
      ```
 
 16. Devuelve un listado con todos los departamentos que tienen alguna asignatura que no se haya impartido en ningún curso escolar. El resultado debe mostrar el nombre del departamento y el nombre de la asignatura que no se haya impartido nunca.
 
      ```sql
-       # Consulta Aqui
+      SELECT D.nombre AS nombre_departamento, A.nombre AS nombre_asignatura
+      FROM departamento D
+      JOIN profesor P ON P.id_departamento = D.id
+      JOIN asignatura A ON A.id_profesor = P.id_profesor
+      LEFT JOIN alumno_se_matricula_asignatura AMA ON AMA.id_asignatura = A.id
+      WHERE AMA.id_asignatura IS NULL;
+
+      +---------------------+---------------------------------------------------+
+      | nombre_departamento | nombre_asignatura                                 |
+      +---------------------+---------------------------------------------------+
+      | Informática         | Arquitectura de Computadores                      |
+      | Informática         | Estructura de Datos y Algoritmos I                |
+      | Informática         | Ingeniería del Software                           |
+      | Informática         | Sistemas Inteligentes                             |
+      | Informática         | Sistemas Operativos                               |
+      | Informática         | Bases de Datos                                    |
+      | Informática         | Estructura de Datos y Algoritmos II               |
+      | Informática         | Fundamentos de Redes de Computadores              |
+      | Informática         | Planificación y Gestión de Proyectos Informáticos |
+      | Informática         | Programación de Servicios Software                |
+      | Informática         | Desarrollo de interfaces de usuario               |
+      +---------------------+---------------------------------------------------+
+      11 rows in set (0.00 sec)
      ```
 
 17. Devuelve el número total de **alumnas** que hay.
 
      ```sql
-       # Consulta Aqui
+    SELECT COUNT(sexo) AS total_alumnas
+    FROM persona P
+    WHERE P.sexo = 'M' AND P.tipo ='alumno';
      ```
 
 18. Calcula cuántos alumnos nacieron en `1999`.
 
      ```sql
-       # Consulta Aqui
+      SELECT COUNT(fecha_nacimiento)
+      FROM persona
+      WHERE tipo='alumno' AND fecha_nacimiento LIKE '%1999%'
      ```
 
 19. Calcula cuántos profesores hay en cada departamento. El resultado sólo debe mostrar dos columnas, una con el nombre del departamento y otra con el número de profesores que hay en ese departamento. El resultado sólo debe incluir los departamentos que tienen profesores asociados y deberá estar ordenado de mayor a menor por el número de profesores.
 
      ```sql
-       # Consulta Aqui
+        SELECT D.nombre,COUNT(P.id_profesor) as TOTAL_PROFESORES
+        FROM profesor P
+        LEFT JOIN departamento D ON D.id = P.id_departamento GROUP BY D.nombre
      ```
 
 20. Devuelve un listado con todos los departamentos y el número de profesores que hay en cada uno de ellos. Tenga en cuenta que pueden existir departamentos que no tienen profesores asociados. Estos departamentos también tienen que aparecer en el listado.
