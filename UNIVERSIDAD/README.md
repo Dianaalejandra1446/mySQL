@@ -487,7 +487,7 @@
 
 20. Devuelve un listado con todos los departamentos y el número de profesores que hay en cada uno de ellos. Tenga en cuenta que pueden existir departamentos que no tienen profesores asociados. Estos departamentos también tienen que aparecer en el listado.
 
-     ```sql
+     ```
        # Consulta Aqui
      ```
 
